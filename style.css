@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+HK&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,300&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 17vh;
+    background-image: url(./img/fondo_header.jpg);
+    background-size: contain;
+    color: #B49A67;
+    font-family: 'Silkscreen', cursive;
+}
+.header h1{
+    margin: 1rem;
+}
+.header h2{
+    text-decoration: underline;
+}
+
+.main{
+    background-color: #06070E;
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 1fr 1fr 1fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+        "notebook oculus"
+        "kindle iphone"
+        "formulario formulario";  
+}
+
+.productos{
+    border: #DB5461 groove 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    color: #FAFAFA;
+    margin: 3rem;
+}
+.productos h2{
+    font-family: 'Bebas Neue', cursive;
+    font-size: xx-large;
+    margin: 1rem;
+}
+.productos h3{
+    font-family: 'Noto Serif HK', serif;
+    font-size: x-large;
+    margin: 1rem;
+}
+.productos p{
+    font-family: 'Montserrat', sans-serif;
+    margin: 1rem;
+}
+.productos button{
+    margin: 1rem;
+    height: 4vh;
+    width: 11vw;
+}
+.productos button:active{
+    background-color: #38A3A5;
+}
+
+.cantidad{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.cantidad select{
+    padding: 0.4rem;
+}
+
+
+
+.notebook {
+    grid-area: notebook; 
+}
+.notebook img{
+    height: 30rem;
+    width: 30rem;
+}
+
+.oculus { 
+    grid-area: oculus; 
+}
+.oculus img{
+    height: 30rem;
+    width: 30rem;
+}
+
+.kindle { 
+    grid-area: kindle; 
+}
+.kindle img{
+    height: 30rem;
+    width: 30rem;
+}
+
+.iphone { 
+    grid-area: iphone; 
+}
+.iphone img{
+    height: 30rem;
+    width: 30rem;
+}
+
+.formulario { 
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Silkscreen', cursive;
+    color: #B49A67;
+    grid-area: formulario; 
+    border: #DB5461 groove 10px;
+}
+.formulario .cantidad p{
+    margin: 1rem;
+    color: #FAFAFA;
+    font-family: 'Montserrat', sans-serif;
+}
+.formulario button{
+    width: 15vw;
+    height: 4vh;
+    margin: 0.5rem;
+}
+.formulario h3{
+    margin: 1rem;
+    text-align: center;
+}
+
+
+.form{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: stretch;
+}
+.form input{
+    margin: 1rem;
+    width: 23vw;
+    height: 4vh;
+}
+.form textarea{
+    margin: 1rem;
+}
+.completar{
+    text-align: center;
+}
+
+.seleccionar{
+    text-align: center;
+}
+
+.abonado{
+    text-align: center;
+}
