@@ -28,6 +28,14 @@
 .header h2{
     text-decoration: underline;
 }
+.header a{
+    text-decoration: none;
+    color: #B49A67;
+}
+.header a:hover{
+    transform: scale(1.3);
+    transition: 0.3s;
+}
 
 .main{
     background-color: #06070E;
@@ -138,7 +146,7 @@
     font-family: 'Montserrat', sans-serif;
 }
 .formulario button{
-    width: 15vw;
+    width: 20vw;
     height: 4vh;
     margin: 0.5rem;
 }
@@ -158,7 +166,7 @@
 }
 .form input{
     margin: 1rem;
-    width: 23vw;
+    width: 25vw;
     height: 4vh;
 }
 .form textarea{
@@ -174,4 +182,69 @@
 
 .abonado{
     text-align: center;
+}
+
+.carrito{
+    bottom: 1rem;
+    right: 0;
+    position: fixed;
+}
+.carrito img{
+    height: 11vh;
+    width: 8vw;
+}
+
+
+.cuerpoModal{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+}
+.cuerpoModal img{
+    margin: 0;
+    padding: 0;
+    height: 10vh;
+    width: 6vw;
+}
+.cuerpoModal h2{
+    font-size: large;
+}
+.cuerpoModal h3{
+    font-size: medium;
+}
+.cuerpoModal p{
+    font-size: small;
+}
+.detallesModal{
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    height: 15vh;
+}
+.btnEliminar{
+    position: relative;
+    border: none;
+    background-color: transparent;
+}
+.btnEliminar img{
+    height: 7vh;
+    width: 4vw;
+}
+
+.btnBorrar{
+    position: relative;
+    left: 1rem;
+    margin: 1rem;
+    border: none;
+    background-color: transparent;
+}
+.btnBorrar img{
+    height: 7vh;
+    width: 4vw;
 }

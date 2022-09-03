@@ -5,6 +5,8 @@ const valorDll = 300
 //variable global para la validacion del formulario
 let pverdadero = false
 
+let hayUnArticulo = 0;
+
 //creo las variables para los eventos
 let btnNotebook = document.getElementById("btnNotebook");
 let btnOculus = document.getElementById("btnOculus");
@@ -13,65 +15,110 @@ let btnIphone = document.getElementById("btnIphone");
 let addBtn = document.getElementById("addBtn");
 let form = document.getElementById("form");
 let verBtn = document.getElementById("verBtn");
-let todosLosProd = document.getElementById("todosLosProd");
-let abonar = document.getElementById("abonar");
-let arsBtn = document.getElementById("arsBtn");
-let dolBtn = document.getElementById("dolBtn");
-let formulario = document.getElementById("formulario")
+let formulario = document.getElementById("formulario");
+let articulos = document.getElementById("articulos");
+let btnEliminar = document.getElementById("btnEliminar");
+let productoN = document.createElement("div");
+let productoO = document.createElement("div");
+let productoK = document.createElement("div");
+let productoI = document.createElement("div");
+let productoU = document.createElement("div");
 
 
 
-let producto = form.children[0].value;
-let precio = form.children[1].value;
-let detalle = form.children[2].value;
+
+
+
+// let producto = form.children[0].value;
+// let precio = form.children[1].value;
+// let detalle = form.children[2].value;
 
 
 //creo el constructor para los objetos
 class Articulo{
-    constructor (nombre, precioDol, detalle){
+    constructor (id, nombre, precioDol, detalle, img){
+        this.id = Number(id);
         this.nombre = nombre;
         this.precioDol = Number(precioDol);
         this.detalle = detalle;
+        this.img = img;
     }
 }
+
+
+//creo el array que va a contener los productos seleccionados/agregados
+const carrito=[
+    {id: 1, nombre: "Notebook ASUS TUF F17", precioDol: 1500, detalle: "17 pulgadas, i7-12700H, 16GB RAM, 1TB SSD, RTX 3060.", img: "./img/Asus TUF F17.png"},
+    {id: 2, nombre: "Oculus Quest 2", precioDol: 430, detalle: "256GB, Controles Touch, Audio 3D.", img: "./img/oculus-quest-2.png"},
+    {id: 3, nombre: "Kindle Oasis", precioDol: 290, detalle: "8gb, incluye cargador, funda de cuero y soporte", img: "./img/kindle_oasis.png"},
+    {id: 4, nombre: "Iphone 13", precioDol: 800, detalle: "128gb, 5.4 pulgadas, resolucion 2340 x 1080, dos camaras de 12MP  incluye cable USB-C.", img: "./img/iphone13.png"}
+];
+
+
 
 //FUNCIONES!!
 
+
+
 //creo una funcion para el boton comprar del articulo Notebook
-function agregarNotebook(){
-    let cantidadN = document.getElementById("cantidadN").value;
-    for(i = 1; i <= cantidadN; i++){
-        carrito.push(notebook)
-    }
-    console.log(carrito);
+
+function agregarNotebook (){
+    productoN = document.createElement("div");
+    productoN.innerHTML = `<div class="cuerpoModal">
+    <img src="./img/Asus TUF F17.png" alt="Notebook Asus TUF F17">
+    <span class="detallesModal">
+    <h2 id="nombre">Notebook ASUS TUF F17</h2>
+    <h3 id="precio">U$D 1500 </h3>
+    <p><strong id="detalle">Detalles: 17 pulgadas, i7-12700H, 16GB RAM, 1TB SSD, RTX 3060.</strong></p></span>
+    <button onclick="eliminarDelCarrito(productoN)" class="btnEliminar"><img src="./img/borrar-plugins-wordpress.png" alt="imagen de tacho de basura"></button>
+    </div>`
+    articulos.appendChild(productoN);
 }
+
+
 
 //creo una funcion para el boton comprar del articulo Oculus
 function agregarOculus(){
-    let cantidadO = document.getElementById("cantidadO").value;
-    for(i = 1; i <= cantidadO; i++){
-        carrito.push(oculus)
-    }
-    console.log(carrito);
+    productoO = document.createElement("div");
+    productoO.innerHTML = `<div class="cuerpoModal">
+    <img src="./img/oculus-quest-2.png" alt="Oculus Quest 2">
+    <span class="detallesModal">
+    <h2 id="nombre">Oculus Quest 2</h2>
+    <h3 id="precio"> U$D 430 </h3>
+    <p><strong id="detalle">Detalles: 256GB, Controles Touch, Audio 3D.</strong></p></span>
+    <button onclick="eliminarDelCarrito(productoO)" class="btnEliminar"><img src="./img/borrar-plugins-wordpress.png" alt="imagen de tacho de basura"></button>
+   </div>`
+    articulos.appendChild(productoO);
 }
 
 //creo una funcion para el boton comprar del articulo Kindle
 function agregarKindle(){
-    let cantidadK = document.getElementById("cantidadK").value;
-    for(i = 1; i <= cantidadK; i++){
-        carrito.push(kindle)
-    }
-    console.log(carrito);
+    productoK = document.createElement("div");
+    productoK.innerHTML = `<div class="cuerpoModal">
+    <img src="./img/kindle_oasis.png" alt="Kindle Oasis">
+    <span class="detallesModal">
+    <h2 id="nombre">Kindle Oasis</h2>
+    <h3 id="precio">U$D 290 </h3>
+    <p><strong id="detalle">Detalles: 8gb, incluye cargador, funda de cuero y soporte</strong></p></span>
+    <button onclick="eliminarDelCarrito(productoK)" class="btnEliminar"><img src="./img/borrar-plugins-wordpress.png" alt="imagen de tacho de basura"></button>
+   </div>`
+    articulos.appendChild(productoK);
 }
 
 //creo una funcion para el boton comprar del articulo Iphone
 function agregarIphone(){
-    let cantidadI = document.getElementById("cantidadI").value;
-    for(i = 1; i <= cantidadI; i++){
-        carrito.push(iphone)
-    }
-    console.log(carrito);
+    productoI = document.createElement("div");
+    productoI.innerHTML = `<div class="cuerpoModal">
+    <img src="./img/iphone13.png" alt="Iphone 13">
+    <span class="detallesModal">
+    <h2 id="nombre">Iphone 13</h2>
+    <h3 id="precio">U$D 800 </h3>
+    <p><strong id="detalle">Detalles: 8gb, incluye cargador, funda de cuero y soporte</strong></p></span>
+    <button onclick="eliminarDelCarrito(productoI)" class="btnEliminar"><img src="./img/borrar-plugins-wordpress.png" alt="imagen de tacho de basura"></button>
+   </div>`
+    articulos.appendChild(productoI);
 }
+
 
 function validarDatos(nombre, precio, detalle){
     if(nombre === "" || precio === "" || detalle === ""){
@@ -82,16 +129,16 @@ function validarDatos(nombre, precio, detalle){
 }
 
 function agregarX(e){
+    let idP = 5 
     e.preventDefault();
-    producto = form.children[0].value;
-    precio = form.children[1].value;
-    detalle = form.children[2].value;
+    const producto = form.children[0].value;
+    const precio = form.children[1].value;
+    const detalle = form.children[2].value;
     let completeLosCampos = document.createElement("div");
     completeLosCampos.innerHTML = `<div class="completar" id="resultado"></div>`
     form.append(completeLosCampos);
     let p = document.getElementById("resultado");
     validarDatos(producto, precio, detalle);
-    console.log(precio,producto,detalle);
     while(pverdadero == true){
         p.innerText = `Complete todos los campos!`
         validarDatos(producto, precio, detalle);
@@ -99,32 +146,29 @@ function agregarX(e){
     }
     if(pverdadero == false){
         p.remove();
-        const convertirEnString = JSON.stringify(new Articulo(producto, precio, detalle));
-        let cantidadX = document.getElementById("cantidadX").value;
-        for(let i = 1; i <= cantidadX; i++){
-            carrito.push(new Articulo(producto, precio, detalle));
-            localStorage.setItem(`producto ${i}`, convertirEnString);
-            }
+        const convertirEnString = JSON.stringify(new Articulo(idP,producto, precio, detalle, "./img/unknown.png" ));
+        carrito.push(new Articulo(idP, producto, precio, detalle, "./img/unknown.png"));
+        localStorage.setItem(`producto ${idP}`, convertirEnString);
+        productoU = document.createElement("div");
+        productoU.innerHTML = `<div class="cuerpoModal">
+        <img src="./img/unknown.png" alt="producto desconocido">
+        <span class="detallesModal">
+        <h2 id="nombre">${producto}</h2>
+        <h3 id="precio"> U$D ${precio} </h3>
+        <p><strong id="detalle">Detalles: ${detalle}</strong></p></span>
+        <button onclick="eliminarDelCarrito(productoU)"  class="btnBorrar"><img src="./img/borrar-plugins-wordpress.png" alt="imagen de tacho de basura"></button>
+        </div>`
+        articulos.appendChild(productoU);
+        idP++
+        
+
     }
 }
 
-function verProductos(){
-    let elegiUnProd = document.createElement("div");
-    elegiUnProd.innerHTML = `<div class="elegi" id="elegi"></div>`
-    todosLosProd.append(elegiUnProd);
-    let elegi = document.getElementById("elegi");
-    if(carrito.length > 0){
-        elegi.remove();
-        carrito.forEach(element =>{
-            let li = document.createElement("li");
-            li.innerHTML = `Articulo: ${element.nombre}. Precio en dolares: ${element.precioDol}. Detalle: ${element.detalle}`;
-            todosLosProd.appendChild(li);
-        })
-        valorDolares();
-    }else{
-        elegi.innerText = `Elegi/Ingresa un producto primero!`
-    }
+const eliminarDelCarrito = (prod) =>{
+    prod.remove();
 }
+
 
 function valorDolares(){
     const valorSubtotalDol = carrito.reduce((acc, element) => acc + element.precioDol, 0);
@@ -133,48 +177,19 @@ function valorDolares(){
     todosLosProd.append(totalDol);
 }
 
-function botones(){
-    let seleccioneUnProducto = document.createElement("div");
-    seleccioneUnProducto.innerHTML = `<div class="seleccionar" id="seleccionProd"></div>`;
-    abonar.append(seleccioneUnProducto);
-    let aviso = document.getElementById("seleccionProd");
-    let prodAbonado = document.getElementById("prodAbonado")
-    console.log(carrito.length);
-    while(carrito.length == 0){
-        aviso.innerText = `Seleccione un producto primero!`
-        break
-    }
-    if(carrito.length > 0){
-        aviso.remove();
-        prodAbonado.innerText = `¡Producto abonado!`
-    }
-}
 
 
 const arsConImpuestos = (subtotalDol) => {return ((subtotalDol *= valorDll) * 1.75).toFixed(2)};
 
 
-//creo los objetos ya existentes
-const notebook = new Articulo("Notebook ASUS TUF F17", 1500, "17 pulgadas, i7-12700H, 16GB RAM, 1TB SSD, RTX 3060.");
-
-const oculus = new Articulo("Oculus Quest 2", 430, "256GB, Controles Touch, Audio 3D.");
-
-const kindle = new Articulo("Kindle Oasis", 290, "8gb, incluye cargador, funda de cuero y soporte");
-
-const iphone = new Articulo("Iphone 13", 800, "128gb, 5.4 pulgadas, resolucion 2340 x 1080, dos camaras de 12MP  incluye cable USB-C.");
-
-
-//creo el array que va a contener los productos seleccionados/agregados
-const carrito = [];
 
 
 
 //EVENTOS
-btnNotebook.onclick =  agregarNotebook;
+btnNotebook.onclick = agregarNotebook;
 btnOculus.onclick = agregarOculus;
 btnKindle.onclick = agregarKindle;
 btnIphone.onclick = agregarIphone;
 addBtn.onclick = agregarX;
-verBtn.onclick = verProductos;
-arsBtn.onclick = botones;
-dolBtn.onclick = botones;
+
+
