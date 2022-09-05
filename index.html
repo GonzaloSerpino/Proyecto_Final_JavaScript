@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    
     <link rel="stylesheet" href="style.css">
 
     <title>ShipExpress</title>
@@ -15,58 +17,75 @@
 <body class="body">
     <header class="header">
         <h1>ShipExpress</h1>
-        <h2>Mira nuestros productos destacados!</h2>
+
     </header>
 
     <main class="main" id="main">
+        <h2 class="destacado">¡Mira nuestros productos destacados!</h2>
+        <div class="articulos">
+            <div class="notebook productos" id="producto">
+                <img src="./img/Asus TUF F17.png" alt="Notebook Asus TUF F17">
+                <h2 id="nombre">Notebook ASUS TUF F17</h2>
+                <h3 id="precio">U$D 1500 </h3>
+                <p><strong id="detalle">Detalles: 17 pulgadas, i7-12700H, 16GB RAM, 1TB SSD, RTX 3060.</strong></p>
+                <button type="submit" id="btnNotebook">Comprar</button>
+            </div>
+    
+            <div class="oculus productos" id="oculus">
+                <img src="./img/oculus-quest-2.png" alt="Oculus Quest 2">
+                <h2 id="nombreO">Oculus Quest 2</h2>
+                <h3 id="precioO">U$D 430 </h3>
+                <p><strong id="detalle">Detalles: 256GB, Controles Touch, Audio 3D.</strong></p>
+                <button type="submit" id="btnOculus">Comprar</button>
+    
+            </div>
+    
+            <div class="productos kindle" id="kindle">
+                <img src="./img/kindle_oasis.png" alt="Kindle Oasis">
+                <h2 id="nombre">Kindle Oasis</h2>
+                <h3 id="precio">U$D 290 </h3>
+                <p><strong>Detalles: 8gb, incluye cargador, funda de cuero y soporte</strong></p>
+                <button type="submit" id="btnKindle">Comprar</button>
+    
+            </div>
+    
+            <div class="productos iphone" id="iphone">
+                <img src="./img/iphone13.png" alt="Iphone 13">
+                <h2 id="nombre">Iphone 13</h2>
+                <h3 id="precio">U$D 800 </h3>
+                <p><strong>Detalles: 128gb, 5.4 pulgadas, resolucion 2340 x 1080, dos camaras de 12MP incluye cable
+                USB-C.</strong></p>
+                <button type="submit" id="btnIphone">Comprar</button>
+            </div>
+            
+            <div class="volante productos" id="producto">
+                <img src="./img/logitech.png" alt="Volante Logitech G923">
+                <h2 id="nombre">Volante Logitech G923</h2>
+                <h3 id="precio">U$D 300 </h3>
+                <p><strong id="detalle">Detalles: Compatibilidad con PC y XBOX ONE, nuevo sistema TRUEFORCE, pedales incluidos.</strong></p>
+                <button type="submit" id="btnVolante">Comprar</button>
+            </div>
 
-        <div class="notebook productos" id="producto">
-            <img src="./img/Asus TUF F17.png" alt="Notebook Asus TUF F17">
-            <h2 id="nombre">Notebook ASUS TUF F17</h2>
-            <h3 id="precio">U$D 1500 </h3>
-            <p><strong id="detalle">Detalles: 17 pulgadas, i7-12700H, 16GB RAM, 1TB SSD, RTX 3060.</strong></p>
-            <button type="submit" id="btnNotebook">Comprar</button>
+            <div class="playstation productos" id="producto">
+                <img src="./img/ps5-product-thumbnail-01-en-14sep21.png" alt="Playstation 5">
+                <h2 id="nombre">Playstation 5</h2>
+                <h3 id="precio">U$D 500 </h3>
+                <p><strong id="detalle">Detalles: 852GB SSD, incluye joystick dualsense.</strong></p>
+                <button type="submit" id="btnPlay">Comprar</button>
+            </div>
+
         </div>
 
-        <div class="oculus productos" id="oculus">
-            <img src="./img/oculus-quest-2.png" alt="Oculus Quest 2">
-            <h2 id="nombreO">Oculus Quest 2</h2>
-            <h3 id="precioO">U$D 430 </h3>
-            <p><strong id="detalle">Detalles: 256GB, Controles Touch, Audio 3D.</strong></p>
-            <button type="submit" id="btnOculus">Comprar</button>
-        </div>
-
-        <div class="productos kindle" id="kindle">
-            <img src="./img/kindle_oasis.png" alt="Kindle Oasis">
-            <h2 id="nombre">Kindle Oasis</h2>
-            <h3 id="precio">U$D 290 </h3>
-            <p><strong>Detalles: 8gb, incluye cargador, funda de cuero y soporte</strong></p>
-            <button type="submit" id="btnKindle">Comprar</button>
-        </div>
-
-        <div class="productos iphone" id="iphone">
-            <img src="./img/iphone13.png" alt="Iphone 13">
-            <h2 id="nombre">Iphone 13</h2>
-            <h3 id="precio">U$D 800 </h3>
-            <p><strong>Detalles: 128gb, 5.4 pulgadas, resolucion 2340 x 1080, dos camaras de 12MP incluye cable
-            USB-C.</strong></p>
-            <button type="submit" id="btnIphone">Comprar</button>
-        </div>
 
         <div class="formulario" id="formulario">
-            <h2>O ingresa el producto que quieras y te lo llevamos a la puerta de tu casa!</h2>
-            <form action="" class="form" id="form">
-                <input type="text" id="producto" placeholder="Ingrese el nombre del producto">
-                <input type="number" id="precio" placeholder="Ingrese el precio del producto en dolares">
-                <input type="text" id="detalle" placeholder="Ingrese el detalle del producto">
-                <textarea cols="30" rows="7" placeholder="Ingresa un comentario si lo deseas"></textarea>
-            </form>
-            <button type="submit" id="addBtn">Enviar producto al carrito</button>
+
         </div>
 
+
 <!-- Button trigger modal -->
-    <button type="button" class="carrito btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button type="button" class="carrito btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
         <img src="./img/carrito.png" alt="imagen de carrito de compras">
+        <i id="contadorCarrito" class="contador">0</i>
     </button>
   
   <!-- Modal -->
@@ -82,7 +101,8 @@
         
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary">Guardar cambios</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="btnVaciar">Vaciar carrito</button>
+          <button type="button" class="btn btn-primary">Confirmar compra</button>
         </div>
       </div>
     </div>
@@ -92,12 +112,24 @@
 
     </main>
 
-    <footer class="footer"></footer>
+    <footer class="formulario">
+        <h2>Si queres que te traigamos otro producto, solo tenes que pedirlo!</h2>
+        <form action="" class="form" id="form">
+            <input type="text" id="producto" placeholder="Ingrese el nombre del producto">
+            <input type="text" id="detalle" placeholder="Ingrese el detalle del producto">
+            <input type="email" name="" id="email" placeholder="Ingrese su email">
+            <textarea cols="30" rows="7" placeholder="Ingresa un comentario si lo deseas"></textarea>
+        </form>
+        <p id="resultado"></p>
+        <button type="submit" id="addBtn">Enviar consulta</button>
+    </footer>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-        crossorigin="anonymous"></script>
+    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+    crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="app.js"></script>
 </body>
 

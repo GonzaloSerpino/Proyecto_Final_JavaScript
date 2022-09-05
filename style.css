@@ -39,6 +39,18 @@
 
 .main{
     background-color: #06070E;
+
+}
+
+.destacado{
+    font-family: 'Silkscreen', cursive;
+    color: #B49A67;
+    text-align: center;
+    padding: 1rem;
+    text-decoration: underline;
+}
+
+.articulos{
     display: grid; 
     grid-template-columns: 1fr 1fr; 
     grid-template-rows: 1fr 1fr 1fr; 
@@ -46,7 +58,11 @@
     grid-template-areas: 
         "notebook oculus"
         "kindle iphone"
-        "formulario formulario";  
+        "volante playstation";
+}
+.articulos img{
+    height: 30rem;
+    width: 30rem;
 }
 
 .productos{
@@ -84,6 +100,8 @@
 }
 
 .cantidad{
+    font-family: 'Montserrat', sans-serif;
+    color: white;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -99,36 +117,35 @@
 .notebook {
     grid-area: notebook; 
 }
-.notebook img{
-    height: 30rem;
-    width: 30rem;
-}
+
 
 .oculus { 
     grid-area: oculus; 
 }
-.oculus img{
-    height: 30rem;
-    width: 30rem;
-}
+
 
 .kindle { 
     grid-area: kindle; 
 }
-.kindle img{
-    height: 30rem;
-    width: 30rem;
-}
+
 
 .iphone { 
     grid-area: iphone; 
 }
-.iphone img{
-    height: 30rem;
-    width: 30rem;
+
+.volante{
+    grid-area: volante;
 }
 
+.playstation{
+    grid-area: playstation;
+}
+
+
 .formulario { 
+    background-image: url("./img/fondo_footer.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -138,7 +155,7 @@
     font-family: 'Silkscreen', cursive;
     color: #B49A67;
     grid-area: formulario; 
-    border: #DB5461 groove 10px;
+    padding: 1rem;
 }
 .formulario .cantidad p{
     margin: 1rem;
@@ -176,23 +193,41 @@
     text-align: center;
 }
 
-.seleccionar{
-    text-align: center;
-}
 
-.abonado{
-    text-align: center;
-}
+
+
 
 .carrito{
     bottom: 1rem;
     right: 0;
     position: fixed;
+    display: flex;
+    align-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    background-color: transparent;
+    border: none;
 }
+
 .carrito img{
     height: 11vh;
     width: 8vw;
 }
+
+.contador{
+    color: white;
+    font-size: x-large;
+    font-weight: 900;
+    position: fixed;
+    bottom: 6rem;
+    right: 0.8rem;
+    border: red solid 10px;
+    border-radius: 50%;
+    width: 3vw;
+    background-color: red;
+    font-family: 'Montserrat', sans-serif;
+}
+
 
 
 .cuerpoModal{
@@ -216,6 +251,8 @@
 }
 .cuerpoModal p{
     font-size: small;
+    margin: 0;
+    padding: 0;
 }
 .detallesModal{
     margin: 1rem;
@@ -247,4 +284,19 @@
 .btnBorrar img{
     height: 7vh;
     width: 4vw;
+}
+
+.precioProducto{
+    text-align: end;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.modal-footer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
 }
