@@ -5,7 +5,6 @@ const valorDll = 300
 //variable global para la validacion del formulario
 let pverdadero = false
 
-let vaciar = false
 
 
 //creo las variables para los eventos
@@ -25,20 +24,7 @@ let btnVaciar = document.getElementById("btnVaciar")
 
 
 
-
-//creo el constructor para los objetos
-class Articulo{
-    constructor (id, nombre, precioDol, detalle, img){
-        this.id = Number(id);
-        this.nombre = nombre;
-        this.precioDol = Number(precioDol);
-        this.detalle = detalle;
-        this.img = img;
-    }
-}
-
-
-//creo el array que va a contener los productos seleccionados/agregados
+//creo el array que va a contener los productos seleccionados
 const articulosExistentes =[
     {id: 1, nombre: "Notebook ASUS TUF F17", precioDol: 1500, detalle: "17 pulgadas, i7-12700H, 16GB RAM, 1TB SSD, RTX 3060.", img: "./img/Asus TUF F17.png", alt: "Notebook ASUS TUF F17", cantidad: 1},
     {id: 2, nombre: "Oculus Quest 2", precioDol: 430, detalle: "256GB, Controles Touch, Audio 3D.", img: "./img/oculus-quest-2.png", alt:"Oculus Quest 2", cantidad: 1},
@@ -48,29 +34,36 @@ const articulosExistentes =[
     {id: 6, nombre: "Playstation 5", precioDol: 500, detalle: "852GB SSD, incluye joystick dualsense.", img: "./img/ps5-product-thumbnail-01-en-14sep21.png", alt: "Playstation 5", cantidad: 1},
 ];
 
+//creo el array vacio con los productos que se agregaron al carrito
 let carrito = [];
 
 
 
 //FUNCIONES!!
 
+//creo la funcion que pushea los articulos al array carrito
 const sumarAlCarrito = (itemId) => {
+    //creo una variable utilizando el metodo .some para saber si ya esta agregado al carrito el producto que se selecciono
     const existe = carrito.some(articulo => articulo.id === itemId);
+    //creo el condicional
     if(existe){
+        //uso el metodo .map para que encuentre cual es el producto que ya esta agregado y asi, sumarle la cantidad al hacer click devuelta
         carrito.map(prod => {
             if(prod.id === itemId){
                 prod.cantidad++
-                console.log(prod.cantidad);
             }
         })
     }else{
         const item = articulosExistentes.find((item)=> item.id === itemId);
         carrito.push(item);
     }
+    //llamo devuelta a la funcion actualizar carrito
     actualizarCarrito();
 }
 
+//creo la funcion actualizar carrito que modifica el DOM dentro del modal
 const actualizarCarrito = () =>{
+    //inicializo el DOM del modal vacio
     articulos.innerHTML = "";
     for (const dato of carrito) {
         let producto = document.createElement("div");
@@ -83,15 +76,19 @@ const actualizarCarrito = () =>{
         <p><strong id="detalle">Detalles: ${dato.detalle}</strong></p></span>
         <button onclick="eliminarDelCarrito(${dato.id})" class="btnEliminar"><img src="./img/borrar-plugins-wordpress.png" alt="imagen de tacho de basura"></button>`;
         articulos.appendChild(producto);
+        //Me almaceno en el localStorage los articulos
         localStorage.setItem("carrito", JSON.stringify(carrito));
     }
+    //uso el .innerText para que cada vez que se agrega un articulo, se sume el numero que aparece en el icono del carrito
     contadorCarrito.innerText = carrito.length;
+    //llamo a que se ejecute la funcion que agrega el valor en dolares y en pesos de los totales
     valorDolares();
+    //llamo a la funcion que le avisa al usuario que se agrego un producto
     alertaCarrito();
 }
 
+//creo una funcion usando la libreria Toastify para que le avise al usuario que se agrego un producto al carrito
 const alertaCarrito = () => {
-
     Toastify({
         text: "Producto agregado al carrito",
         duration: 2000,
@@ -107,13 +104,20 @@ const alertaCarrito = () => {
       }).showToast();
 }
 
+//creo la funcion para eliminar un producto individual del carrito
 const eliminarDelCarrito = (prodId) => {
+    //utilizo el metodo .find para que encuentre el articulo que se quiere eliminar mediante el id
     const itemDelCarrito = carrito.find((prod) => prod.id === prodId);
+    //busco el indice de ese articulo y lo almaceno en una variable
     const indice = carrito.indexOf(itemDelCarrito);
+    //uso el metodo .splice para que elimine del carrito el articulo 
     carrito.splice(indice, 1);
+    //actualizo el DOM del modal
     actualizarCarrito();
 }
 
+
+//creo una funcion para que el usuario me confirme si quiere vaciar el carrito utilizando la libreria sweetalert 
 const confirmacionVaciar = (carrito) =>{
     swal({
         title: "¿Estas seguro?",
@@ -141,10 +145,11 @@ const confirmacionVaciar = (carrito) =>{
 }
 
 
-
+//creo la funcion que valida los datos del formulario
 const validarDatos = (nombre, precio, detalle) => {
     (nombre === "") || (precio === "") || (detalle === "") ? pverdadero = true : pverdadero = false;
 }
+
 
 const consultaArticulos = (e) => {
     e.preventDefault();
@@ -160,7 +165,7 @@ const consultaArticulos = (e) => {
 
 }
 
-
+//creo una funcion que almacena en el local storage los datos ingresados en el form
 const camposCompletados = (resultado, producto, detalle, email) =>{
     resultado.remove();
     localStorage.setItem("nombreProducto", producto);
@@ -170,6 +175,7 @@ const camposCompletados = (resultado, producto, detalle, email) =>{
 
 }
 
+//creo una funcion que agrega en el DOM un aviso al usuario para que complete todos los campos
 const camposIncompletos = (resultado) =>{
     while(pverdadero == true){
         resultado.innerText = `Complete todos los campos!`
@@ -178,6 +184,7 @@ const camposIncompletos = (resultado) =>{
     }
 }
 
+//creo un aviso con sweetalert para indicarle al usuario que se lo va a contactar
 const datosEnviados = () =>{
     swal({
         title: "Datos enviados!",
@@ -187,7 +194,7 @@ const datosEnviados = () =>{
       });
 }
 
-
+//creo la funcion que me suma el precio total de los productos utilizando el metodo .reduce
 function valorDolares(){
     const valorSubtotalDol = carrito.reduce((acc, element) => acc + element.precioDol, 0);
     let totalDol = document.createElement("p");
@@ -195,6 +202,7 @@ function valorDolares(){
     articulos.appendChild(totalDol);
 }
 
+//creo una funcion que me convierte el precio de dolares a pesos
 const arsConImpuestos = (subtotalDol) => {return ((subtotalDol *= valorDll) * 1.75).toFixed(2)};
 
 
@@ -219,17 +227,19 @@ btnVolante.addEventListener("click", () =>{
 });
 btnPlay.addEventListener("click", () =>{
     sumarAlCarrito(6);
-})
+});
 addBtn.onclick = consultaArticulos;
 btnVaciar.addEventListener("click", () =>{
     confirmacionVaciar(carrito);
 });
+
+//uso el local storage para que me almacene los articulos ingresados al carrito aunque el usuario haga un refresh a la pagina
 document.addEventListener("DOMContentLoaded", () =>{
     if(localStorage.getItem("carrito")){
         carrito = JSON.parse(localStorage.getItem("carrito"));
         actualizarCarrito();
     }
-})
+});
 
 
 
