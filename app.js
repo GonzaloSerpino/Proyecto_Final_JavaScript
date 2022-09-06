@@ -57,6 +57,8 @@ const sumarAlCarrito = (itemId) => {
         const item = articulosExistentes.find((item)=> item.id === itemId);
         carrito.push(item);
     }
+    //llamo a la funcion que le avisa al usuario que se agrego un producto
+    alertaCarrito();
     //llamo devuelta a la funcion actualizar carrito
     actualizarCarrito();
 }
@@ -83,8 +85,6 @@ const actualizarCarrito = () =>{
     contadorCarrito.innerText = carrito.length;
     //llamo a que se ejecute la funcion que agrega el valor en dolares y en pesos de los totales
     valorDolares();
-    //llamo a la funcion que le avisa al usuario que se agrego un producto
-    alertaCarrito();
 }
 
 //creo una funcion usando la libreria Toastify para que le avise al usuario que se agrego un producto al carrito
