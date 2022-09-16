@@ -21,6 +21,7 @@ let formulario = document.getElementById("formulario");
 let articulos = document.getElementById("articulos");
 let contadorCarrito = document.getElementById("contadorCarrito");
 let btnVaciar = document.getElementById("btnVaciar")
+let btnComprar = document.getElementById("btnComprar");
 
 
 
@@ -82,7 +83,7 @@ const actualizarCarrito = () =>{
         localStorage.setItem("carrito", JSON.stringify(carrito));
     }
     //uso el .innerText para que cada vez que se agrega un articulo, se sume el numero que aparece en el icono del carrito
-    contadorCarrito.innerText = carrito.length;
+    contadorCarrito.innerText = carrito.reduce((acc, element) => acc + element.cantidad, 0);
     //llamo a que se ejecute la funcion que agrega el valor en dolares y en pesos de los totales
     valorDolares();
 }
@@ -112,8 +113,13 @@ const eliminarDelCarrito = (prodId) => {
     const indice = carrito.indexOf(itemDelCarrito);
     //uso el metodo .splice para que elimine del carrito el articulo 
     carrito.splice(indice, 1);
+    //Vuelvo a poner la cantidad del articulo en 1
+    itemDelCarrito.cantidad = 1;
+    //remuevo el item del local storage para que no quede almacenado al actualizarse
+    localStorage.removeItem("carrito");
     //actualizo el DOM del modal
     actualizarCarrito();
+
 }
 
 
@@ -133,6 +139,7 @@ const confirmacionVaciar = (carrito) =>{
           }
           )
             carrito.length = 0;
+            localStorage.removeItem("carrito");
             actualizarCarrito();
             ;
         } else {
@@ -142,6 +149,15 @@ const confirmacionVaciar = (carrito) =>{
         });
         }
       });
+}
+
+const pagarCompra = (carrito) =>{
+    swal({
+        title: "Compra Exitosa",
+        text: "¡Gracias por confiar en nosotros!",
+        icon: "success",
+        button: "Cerrar",
+      })
 }
 
 
@@ -196,10 +212,34 @@ const datosEnviados = () =>{
 
 //creo la funcion que me suma el precio total de los productos utilizando el metodo .reduce
 function valorDolares(){
+    let monedaDePago = document.createElement("p");
+    monedaDePago.innerHTML = `<div class="precioProducto"><select  id="monedaDePago" onchange="pesosODol()">
+        <option value="">Seleccione un metodo de pago</option>
+        <option value="1">Dolares</option>
+        <option value="2">Pesos</option>
+    </select>
+    <p id="resultado"></p></div>`
+    articulos.appendChild(monedaDePago);
+}
+
+const pesosODol = () =>{
+    let valorSelect = document.getElementById("monedaDePago").value
     const valorSubtotalDol = carrito.reduce((acc, element) => acc + element.precioDol, 0);
-    let totalDol = document.createElement("p");
-    totalDol.innerHTML = `<p class="precioProducto">Precio a pagar en dolares: $${valorSubtotalDol} <br> Precio a pagar en pesos: $${arsConImpuestos(valorSubtotalDol)}</p>`
-    articulos.appendChild(totalDol);
+    let resultado = document.getElementById("resultado");
+    console.log(valorSelect)
+    switch (valorSelect) {
+        case 1:
+            let pDol = document.createElement("p");
+            pDol.innerHTML = `<p>Precio en dolares:$${valorSubtotalDol}</p>`
+            resultado.appendChild(pDol);
+
+        case 2:
+            let pArs = document.getElementById("resultado")
+            pArs.innerHTML = `<p>Precio en dolares:$${valorSubtotalDol}</p>`
+            resultado.appendChild(pArs);
+        default:
+            break;
+    }
 }
 
 //creo una funcion que me convierte el precio de dolares a pesos
@@ -232,7 +272,7 @@ addBtn.onclick = consultaArticulos;
 btnVaciar.addEventListener("click", () =>{
     confirmacionVaciar(carrito);
 });
-
+btnComprar.onclick = pagarCompra;
 //uso el local storage para que me almacene los articulos ingresados al carrito aunque el usuario haga un refresh a la pagina
 document.addEventListener("DOMContentLoaded", () =>{
     if(localStorage.getItem("carrito")){
