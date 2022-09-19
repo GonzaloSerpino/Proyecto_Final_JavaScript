@@ -2,47 +2,66 @@
 //variable global para el valor del dolar
 const valorDll = 300
 
+
 //variable global para la validacion del formulario
 let pverdadero = false
 
 
 
 //creo las variables para los eventos
-let btnNotebook = document.getElementById("btnNotebook");
-let btnOculus = document.getElementById("btnOculus");
-let btnKindle = document.getElementById("btnKindle");
-let btnIphone = document.getElementById("btnIphone");
-let btnVolante = document.getElementById("btnVolante");
-let btnPlay = document.getElementById("btnPlay");
-let addBtn = document.getElementById("addBtn");
-let form = document.getElementById("form");
-let verBtn = document.getElementById("verBtn");
-let formulario = document.getElementById("formulario");
-let articulos = document.getElementById("articulos");
-let contadorCarrito = document.getElementById("contadorCarrito");
-let btnVaciar = document.getElementById("btnVaciar")
-let btnComprar = document.getElementById("btnComprar");
+const addBtn = document.getElementById("addBtn");
+const form = document.getElementById("form");
+const verBtn = document.getElementById("verBtn");
+const formulario = document.getElementById("formulario");
+const articulos = document.getElementById("articulos");
+const contadorCarrito = document.getElementById("contadorCarrito");
+const btnVaciar = document.getElementById("btnVaciar")
+const btnComprar = document.getElementById("btnComprar");
+const productosDOM = document.getElementById("productosDOM");
 
 
+//creo el array que va a contener los productos traidos del productos.json
+let productos = [];
 
-//creo el array que va a contener los productos seleccionados
-const articulosExistentes =[
-    {id: 1, nombre: "Notebook ASUS TUF F17", precioDol: 1500, detalle: "17 pulgadas, i7-12700H, 16GB RAM, 1TB SSD, RTX 3060.", img: "./img/Asus TUF F17.png", alt: "Notebook ASUS TUF F17", cantidad: 1},
-    {id: 2, nombre: "Oculus Quest 2", precioDol: 430, detalle: "256GB, Controles Touch, Audio 3D.", img: "./img/oculus-quest-2.png", alt:"Oculus Quest 2", cantidad: 1},
-    {id: 3, nombre: "Kindle Oasis", precioDol: 290, detalle: "8gb, incluye cargador, funda de cuero y soporte", img: "./img/kindle_oasis.png", alt: "Kindle Oasis", cantidad: 1},
-    {id: 4, nombre: "Iphone 13", precioDol: 800, detalle: "128gb, 5.4 pulgadas, resolucion 2340 x 1080, dos camaras de 12MP  incluye cable USB-C.", img: "./img/iphone13.png", alt: "Iphone 13", cantidad: 1},
-    {id: 5, nombre: "Volante Logitech G923", precioDol: 300, detalle: "Compatibilidad con PC y XBOX ONE, nuevo sistema TRUEFORCE, pedales incluidos.", img: "./img/logitech.png", alt: "Volante Logitech G923", cantidad: 1},
-    {id: 6, nombre: "Playstation 5", precioDol: 500, detalle: "852GB SSD, incluye joystick dualsense.", img: "./img/ps5-product-thumbnail-01-en-14sep21.png", alt: "Playstation 5", cantidad: 1},
-];
-
-//creo el array vacio con los productos que se agregaron al carrito
+//creo el array vacio con los productos que se van a agregar al carrito
 let carrito = [];
 
 
 
 //FUNCIONES!!
 
-//creo la funcion que pushea los articulos al array carrito
+//creo una funcion que muestra los articulos del productos.json en el DOM
+const renderProducts = () =>{
+    productos.forEach(element => {
+        productosDOM.innerHTML +=`
+        <div class="${element.clase} productos" id="producto">
+                <img src="${element.img}" alt="${element.nombre}">
+                <h2 id="nombre">${element.nombre}</h2>
+                <h3 id="precio">U$D ${element.precioDol} </h3>
+                <p><strong id="detalle">Detalles: ${element.detalle}.</strong></p>
+                <button type="submit" id="btnNotebook" onclick="sumarAlCarrito(${element.id})">Comprar</button>
+            </div>
+        `
+    });
+}
+
+//traigo los datos de los productos mediante fetch
+const obtenerDatos = async () =>{
+    try{
+        const res = await fetch(`./productos.json`);
+        const data = await res.json();
+        productos = data;
+
+        //llamo a la funcion renderProducts para mostrar los productos
+        renderProducts();
+    }catch (error){
+        console.log(error)
+    }
+}
+
+//llamo a la funcion
+obtenerDatos();
+
 const sumarAlCarrito = (itemId) => {
     //creo una variable utilizando el metodo .some para saber si ya esta agregado al carrito el producto que se selecciono
     const existe = carrito.some(articulo => articulo.id === itemId);
@@ -55,7 +74,7 @@ const sumarAlCarrito = (itemId) => {
             }
         })
     }else{
-        const item = articulosExistentes.find((item)=> item.id === itemId);
+        const item = productos.find((item)=> item.id === itemId);
         carrito.push(item);
     }
     //llamo a la funcion que le avisa al usuario que se agrego un producto
@@ -125,39 +144,57 @@ const eliminarDelCarrito = (prodId) => {
 
 //creo una funcion para que el usuario me confirme si quiere vaciar el carrito utilizando la libreria sweetalert 
 const confirmacionVaciar = (carrito) =>{
-    swal({
-        title: "¿Estas seguro?",
-        text: "Desea eliminar los productos?",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      })
-      .then((aceptar) => {
-        if (aceptar) {
-          swal("Se vacio el carrito!", {
-            icon: "success",
-          }
-          )
-            carrito.length = 0;
-            localStorage.removeItem("carrito");
-            actualizarCarrito();
-            ;
-        } else {
-          swal({
-            text: "No se vacio el carrito",
+    if(carrito.length == 0){
+        swal({
+            title: "Error",
+            text: "No hay productos agregados al carrito",
             icon: "error",
-        });
-        }
-      });
+            button: "cerrar",
+        })
+    } else{
+        swal({
+            title: "¿Estas seguro?",
+            text: "Desea eliminar los productos?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((aceptar) => {
+            if (aceptar) {
+              swal("Se vacio el carrito!", {
+                icon: "success",
+              }
+              )
+                carrito.length = 0;
+                localStorage.removeItem("carrito");
+                actualizarCarrito();
+                ;
+            } else {
+              swal({
+                text: "No se vacio el carrito",
+                icon: "error",
+            });
+            }
+          });
+    }
 }
 
-const pagarCompra = (carrito) =>{
-    swal({
-        title: "Compra Exitosa",
-        text: "¡Gracias por confiar en nosotros!",
-        icon: "success",
-        button: "Cerrar",
-      })
+const pagarCompra = () =>{
+    if(carrito.length == 0){
+        swal({
+            title: "Error",
+            text: "No hay productos agregados al carrito, por favor selecciona uno!",
+            icon: "error",
+            button: "cerrar",
+        })
+    }else{
+        swal({
+            title: "Compra Exitosa",
+            text: "¡Gracias por confiar en nosotros!",
+            icon: "success",
+            button: "Cerrar",
+          })
+    }
 }
 
 
@@ -237,8 +274,8 @@ const pesosODol = () =>{
             let pArs = document.getElementById("resultado")
             pArs.innerHTML = `<p>Precio en dolares:$${valorSubtotalDol}</p>`
             resultado.appendChild(pArs);
-        default:
-            break;
+        // default:
+        //     break;
     }
 }
 
@@ -247,27 +284,7 @@ const arsConImpuestos = (subtotalDol) => {return ((subtotalDol *= valorDll) * 1.
 
 
 
-
-
 //EVENTOS
-btnNotebook.addEventListener("click", () =>{
-    sumarAlCarrito(1);
-});
-btnOculus.addEventListener("click", () =>{
-    sumarAlCarrito(2);
-});
-btnKindle.addEventListener("click", () =>{
-    sumarAlCarrito(3);
-});
-btnIphone.addEventListener("click", () =>{
-    sumarAlCarrito(4);
-});
-btnVolante.addEventListener("click", () =>{
-    sumarAlCarrito(5);
-});
-btnPlay.addEventListener("click", () =>{
-    sumarAlCarrito(6);
-});
 addBtn.onclick = consultaArticulos;
 btnVaciar.addEventListener("click", () =>{
     confirmacionVaciar(carrito);
