@@ -149,7 +149,7 @@ const confirmacionVaciar = (carrito) =>{
             title: "Error",
             text: "No hay productos agregados al carrito",
             icon: "error",
-            button: "cerrar",
+            button: "Cerrar",
         })
     } else{
         swal({
@@ -179,13 +179,14 @@ const confirmacionVaciar = (carrito) =>{
     }
 }
 
+//creo una funcion para que le muestre una alerta al usuario que su compra ha sido exitosa o no al tocar el boton "comprar"
 const pagarCompra = () =>{
     if(carrito.length == 0){
         swal({
             title: "Error",
             text: "No hay productos agregados al carrito, por favor selecciona uno!",
             icon: "error",
-            button: "cerrar",
+            button: "Cerrar",
         })
     }else{
         swal({
@@ -203,7 +204,7 @@ const validarDatos = (nombre, precio, detalle) => {
     (nombre === "") || (precio === "") || (detalle === "") ? pverdadero = true : pverdadero = false;
 }
 
-
+//creo una funcion la cual me permite validar si los campos del formulario fueron completados o no.
 const consultaArticulos = (e) => {
     e.preventDefault();
     let producto = form.children[0].value;
@@ -249,34 +250,10 @@ const datosEnviados = () =>{
 
 //creo la funcion que me suma el precio total de los productos utilizando el metodo .reduce
 function valorDolares(){
-    let monedaDePago = document.createElement("p");
-    monedaDePago.innerHTML = `<div class="precioProducto"><select  id="monedaDePago" onchange="pesosODol()">
-        <option value="">Seleccione un metodo de pago</option>
-        <option value="1">Dolares</option>
-        <option value="2">Pesos</option>
-    </select>
-    <p id="resultado"></p></div>`
-    articulos.appendChild(monedaDePago);
-}
-
-const pesosODol = () =>{
-    let valorSelect = document.getElementById("monedaDePago").value
     const valorSubtotalDol = carrito.reduce((acc, element) => acc + element.precioDol, 0);
-    let resultado = document.getElementById("resultado");
-    console.log(valorSelect)
-    switch (valorSelect) {
-        case 1:
-            let pDol = document.createElement("p");
-            pDol.innerHTML = `<p>Precio en dolares:$${valorSubtotalDol}</p>`
-            resultado.appendChild(pDol);
-
-        case 2:
-            let pArs = document.getElementById("resultado")
-            pArs.innerHTML = `<p>Precio en dolares:$${valorSubtotalDol}</p>`
-            resultado.appendChild(pArs);
-        // default:
-        //     break;
-    }
+    let totalDol = document.createElement("p");
+    totalDol.innerHTML = `<p class="precioProducto">Precio a pagar en dolares: $${valorSubtotalDol} <br> Precio a pagar en pesos: $${arsConImpuestos(valorSubtotalDol)}</p>`
+    articulos.appendChild(totalDol);
 }
 
 //creo una funcion que me convierte el precio de dolares a pesos
